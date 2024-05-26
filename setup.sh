@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Function to check if jq is installed
 check_jq() {
     if ! command -v jq &> /dev/null; then
@@ -22,7 +21,7 @@ install_jq() {
             sudo yum install -y jq
         fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        # macOS
+        # MacOS
         if ! command -v brew &> /dev/null; then
             echo "Homebrew is not installed. Please install Homebrew first."
             exit 1
@@ -30,27 +29,9 @@ install_jq() {
             brew install jq
         fi
     else
-        echo "Unsupported OS. Please install jq manually."
+        echo "Unsupported operating system. Manual installation required."
         exit 1
     fi
 }
-# Activate the virtual environment
-source venv/bin/activate
 
-# Change to the app directory
-cd app/
-
-# Check if jq is installed, and install if necessary
 check_jq
-
-# Path to the JSON file
-json_file="config.json"
-
-# Extract the sidecar port using jq
-SIDECAR_PORT=$(jq -r '.sidecar_port' "$json_file")
-
-# Export environment variables
-export PYTHONDONTWRITEBYTECODE=1
-
-# Start the FastAPI app with uvicorn
-uvicorn main:app --port "$SIDECAR_PORT" --reload
