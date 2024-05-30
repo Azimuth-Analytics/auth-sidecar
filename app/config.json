@@ -1,7 +1,7 @@
 {
     "forward_port": 8004,
     "sidecar_port": 9004,
-    "include_route_configs": true,
+    "include_route_configs": false,
     "route_configs":{
         "prefix": "/api/v1/organizations",
         "routes": {

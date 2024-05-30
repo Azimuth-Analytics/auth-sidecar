@@ -26,7 +26,7 @@ FORWARD_PORT = config.get('forward_port')
 SIDECAR_PORT = config.get('sidecar_port')
 INCLUDE_ROUTE_CONFIGS = config.get('include_route_configs')
 ROUTE_CONFIGS = config.get('route_configs', {}).get('routes', {})
-PREFIX = config.get('route_configs', {}).get('prefix', '')
+PREFIX = ''
 
 BASE_URL = f"http://127.0.0.1:{FORWARD_PORT}"
 
@@ -64,6 +64,7 @@ async def reverse_proxy(request: Request):
 # Determine route configurations
 if INCLUDE_ROUTE_CONFIGS:
     ROUTES = ROUTE_CONFIGS
+    PREFIX = config.get('route_configs', {}).get('prefix', '')
 else:
     # Fetch and parse the OpenAPI schema
     openapi_url = f"{BASE_URL}/openapi.json"
